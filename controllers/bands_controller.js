@@ -20,8 +20,6 @@ bands.get('/', async (req, res) => {
 })
 
 
-
-
 // FIND A SPECIFIC BAND
 bands.get('/:id', async (req, res) => {
     try {
