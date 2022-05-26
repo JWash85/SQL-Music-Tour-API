@@ -1,7 +1,7 @@
 // DEPENDENCIES
 const bands = require("express").Router();
 const db = require("../models");
-const { Band, Meet_Greet, Event, Set_Time } = db;
+const { Band, Meet_Greet, Set_Time, Event } = db;
 const { Op } = require("sequelize");
 
 // FIND ALL BANDS
@@ -10,7 +10,7 @@ bands.get("/", async (req, res) => {
     const foundBands = await Band.findAll({
       order: [["available_start_time", "ASC"]],
       where: {
-        name: { [Op.like]: `%${req.query.name ? req.query.name : ""}%` },
+        name: { [Op.like]: `%${req.query.name ? req.query.name : ''}%` },
       },
     });
     res.status(200).json(foundBands);
@@ -26,24 +26,22 @@ bands.get("/:name", async (req, res) => {
       where: { name: req.params.name },
       include: [
         {
-          model: MeetGreet,
+          model: Meet_Greet,
           as: "meet_greets",
           include: {
             model: Event,
-            as: "event",
-            where: { name: {[Op.like]: `%${req.query.event ? req.query.event : ""}%`,
-              },
+            as: "events",
+            where: { name: {[Op.like]: `%${req.query.events ? req.query.events : ''}%`,},
             },
           },
         },
         {
-          model: SetTime,
+          model: Set_Time,
           as: "set_times",
           include: {
             model: Event,
-            as: "event",
-            where: {name: {[Op.like]: `%${req.query.event ? req.query.event : ""}%`,
-              },
+            as: "events",
+            where: {name: {[Op.like]: `%${req.query.events ? req.query.events : ""}%`,},
             },
           },
         },

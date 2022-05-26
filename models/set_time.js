@@ -13,15 +13,15 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Set_Time.belongsTo(Band, {
         foreignKey: "band_id",
-        as: "band",
+        as: "bands",
       })
       Set_Time.belongsTo(Event, {
         foreignKey: "event_id",
-        as: "event",
+        as: "events",
       })
       Set_Time.belongsTo(Stage, {
         foreignKey: "stage_id",
-        as: "stage",
+        as: "stages",
       })
     }
   }
